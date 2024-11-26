@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.example.mypowerbuttonapp">
+
+    <!-- Required permissions -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.DEVICE_POWER"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="MyPowerButtonApp"
+        android:theme="@style/Theme.MyPowerButtonApp">
+
+        <!-- PowerButtonReceiver to listen for screen on/off events -->
+        <receiver
+            android:name=".PowerButtonReceiver"
+            android:exported="false"> <!-- Set to 'false' if you don't want this accessible externally -->
+            <intent-filter>
+                <action android:name="android.intent.action.SCREEN_OFF" />
+                <action android:name="android.intent.action.SCREEN_ON" />
+            </intent-filter>
+        </receiver>
+
+        <!-- Foreground service for power button monitoring -->
+        <service
+            android:name=".PowerButtonService"
+            android:exported="false" />
+
+        <!-- MainActivity -->
+        <activity
+            android:name=".MainActivity"
+            android:label="MyPowerButtonApp"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+</manifest>
